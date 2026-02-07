@@ -1,8 +1,8 @@
-# ScreenshotGrabber
+# Snapdeck
 
 A lightweight macOS menu bar app that keeps your recent screenshots one click away.
 
-macOS shows a brief thumbnail when you take a screenshot, but it disappears quickly. ScreenshotGrabber solves that by:
+macOS shows a brief thumbnail when you take a screenshot, but it disappears quickly. Snapdeck solves that by:
 
 - Showing recent screenshots in a **menu bar dropdown**
 - Displaying a **floating thumbnail** when a new screenshot is taken (stays visible longer)
@@ -11,8 +11,8 @@ macOS shows a brief thumbnail when you take a screenshot, but it disappears quic
 
 ## Install
 
-1. Download **ScreenshotGrabber.zip** from the [latest release](https://github.com/lonkarabhishek/Snapdeck/releases/latest)
-2. Unzip and drag **ScreenshotGrabber.app** to your Applications folder
+1. Download **Snapdeck.zip** from the [latest release](https://github.com/lonkarabhishek/Snapdeck/releases/latest)
+2. Unzip and drag **Snapdeck.app** to your Applications folder
 3. Double-click to open
 
 > **First launch:** macOS will show a warning because the app isn't signed with an Apple Developer certificate. This is normal for open-source apps.
@@ -38,9 +38,9 @@ Requires macOS 13+ and Xcode Command Line Tools.
 
 ```bash
 git clone https://github.com/lonkarabhishek/Snapdeck.git
-cd ScreenshotGrabber
+cd Snapdeck
 ./build.sh
-open ScreenshotGrabber.app
+open Snapdeck.app
 ```
 
 ## How It Works

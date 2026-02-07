@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
     <key>CFBundleIdentifier</key>
-    <string>com.screenshotgrabber.app</string>
+    <string>com.snapdeck.app</string>
     <key>CFBundleName</key>
-    <string>ScreenshotGrabber</string>
+    <string>Snapdeck</string>
     <key>CFBundleDisplayName</key>
-    <string>ScreenshotGrabber</string>
+    <string>Snapdeck</string>
     <key>CFBundleExecutable</key>
-    <string>ScreenshotGrabber</string>
+    <string>Snapdeck</string>
     <key>CFBundleVersion</key>
     <string>1.0</string>
     <key>CFBundleShortVersionString</key>

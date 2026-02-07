@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-APP_NAME="ScreenshotGrabber"
+APP_NAME="Snapdeck"
 BUILD_DIR="$(cd "$(dirname "$0")" && pwd)"
 APP_BUNDLE="$BUILD_DIR/$APP_NAME.app"
 ZIP_FILE="$BUILD_DIR/$APP_NAME.zip"
