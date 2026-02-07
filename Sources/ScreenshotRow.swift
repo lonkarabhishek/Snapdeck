@@ -38,6 +38,9 @@ struct ScreenshotRow: View {
         }
         .padding(.vertical, 4)
         .contentShape(Rectangle())
+        .onTapGesture(count: 2) {
+            NSWorkspace.shared.open(item.url)
+        }
         .onDrag {
             NSItemProvider(object: item.url as NSURL)
         }
