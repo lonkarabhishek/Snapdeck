@@ -11,13 +11,25 @@ macOS shows a brief thumbnail when you take a screenshot, but it disappears quic
 
 ## Install
 
+### Quick install (recommended)
+
+Paste this in Terminal — it downloads, installs, and opens Snapdeck:
+
+```bash
+curl -sL https://raw.githubusercontent.com/lonkarabhishek/Snapdeck/main/install.sh | bash
+```
+
+### Manual install
+
 1. Download **Snapdeck.zip** from the [latest release](https://github.com/lonkarabhishek/Snapdeck/releases/latest)
 2. Unzip and drag **Snapdeck.app** to your Applications folder
-3. Double-click to open
+3. Before opening, run this in Terminal to remove the macOS quarantine flag:
+   ```bash
+   xattr -cr /Applications/Snapdeck.app
+   ```
+4. Double-click to open
 
-> **First launch:** macOS will show a warning because the app isn't signed with an Apple Developer certificate. This is normal for open-source apps.
->
-> To open it: **Right-click** the app → click **Open** → click **Open** again in the dialog. You only need to do this once.
+> **Why is this needed?** macOS blocks apps that aren't signed with an Apple Developer certificate. This is normal for open-source apps — the command above tells macOS the app is safe to run.
 
 ## Usage
 
