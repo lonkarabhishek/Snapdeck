@@ -7,8 +7,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
     private var store: ScreenshotStore!
     private var watcher: ScreenshotWatcher!
     private var floatingWindow: FloatingThumbnailWindow!
-    private var eventMonitor: Any?
-
     func applicationDidFinishLaunching(_ notification: Notification) {
         store = ScreenshotStore()
         watcher = ScreenshotWatcher()
@@ -25,6 +23,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
         popover = NSPopover()
         popover.contentSize = NSSize(width: 300, height: 400)
         popover.behavior = .transient
+        popover.animates = false
         popover.delegate = self
         popover.contentViewController = NSHostingController(rootView: MenuBarView(store: store))
 
@@ -51,19 +50,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
         store.loadExisting(from: watcher.directory)
         watcher.start()
 
-        // Monitor for clicks outside the popover to close it
-        eventMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown]) { [weak self] _ in
-            if let popover = self?.popover, popover.isShown {
-                popover.performClose(nil)
-            }
-        }
     }
 
     func applicationWillTerminate(_ notification: Notification) {
         watcher.stop()
-        if let monitor = eventMonitor {
-            NSEvent.removeMonitor(monitor)
-        }
     }
 
     @objc private func togglePopover() {
@@ -72,11 +62,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
         if popover.isShown {
             popover.performClose(nil)
         } else {
-            // Refresh the view with latest store state
-            popover.contentViewController = NSHostingController(rootView: MenuBarView(store: store))
             popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
-
-            // Make popover key window so it can receive events
             popover.contentViewController?.view.window?.makeKey()
         }
     }
