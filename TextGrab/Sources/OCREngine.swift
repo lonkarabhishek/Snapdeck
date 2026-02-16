@@ -29,9 +29,19 @@ class OCREngine {
     static func captureScreen(rect: CGRect) -> CGImage? {
         return CGWindowListCreateImage(
             rect,
-            .optionOnScreenBelowWindow,
+            .optionOnScreenOnly,
             kCGNullWindowID,
             [.bestResolution]
         )
+    }
+
+    static func hasScreenRecordingPermission() -> Bool {
+        let testImage = CGWindowListCreateImage(
+            CGRect(x: 0, y: 0, width: 1, height: 1),
+            .optionOnScreenOnly,
+            kCGNullWindowID,
+            []
+        )
+        return testImage != nil
     }
 }

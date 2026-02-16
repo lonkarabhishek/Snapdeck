@@ -55,8 +55,6 @@ class SelectionOverlay: NSWindow {
     }
 
     private func handleSelection(_ rect: NSRect) {
-        dismiss()
-
         guard let screen = NSScreen.main else { return }
         // Convert from window coordinates (origin bottom-left) to screen coordinates for CGWindowListCreateImage (origin top-left)
         let screenHeight = screen.frame.height
@@ -67,7 +65,11 @@ class SelectionOverlay: NSWindow {
             height: rect.height
         )
 
-        onSelection?(cgRect)
+        // Dismiss overlay first, then wait for it to fully disappear before capturing
+        dismiss()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            self.onSelection?(cgRect)
+        }
     }
 }
 

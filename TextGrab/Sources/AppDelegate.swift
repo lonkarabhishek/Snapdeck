@@ -54,6 +54,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
 
     private func startGrab() {
         popover.performClose(nil)
+
+        if !OCREngine.hasScreenRecordingPermission() {
+            showPermissionAlert()
+            return
+        }
+
         // Small delay so the popover closes before the overlay appears
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.overlay.show()
@@ -67,9 +73,33 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
 
         OCREngine.recognizeText(in: image) { [weak self] text in
             DispatchQueue.main.async {
-                guard let text = text, !text.isEmpty else { return }
-                self?.store.addText(text)
+                if let text = text, !text.isEmpty {
+                    self?.store.addText(text)
+                } else {
+                    self?.showNoTextAlert()
+                }
             }
         }
+    }
+
+    private func showPermissionAlert() {
+        let alert = NSAlert()
+        alert.messageText = "Screen Recording Permission Required"
+        alert.informativeText = "TextGrab needs Screen Recording permission to capture text from your screen.\n\nGo to System Settings → Privacy & Security → Screen Recording and enable TextGrab."
+        alert.alertStyle = .warning
+        alert.addButton(withTitle: "Open Settings")
+        alert.addButton(withTitle: "Cancel")
+        if alert.runModal() == .alertFirstButtonReturn {
+            NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_ScreenCapture")!)
+        }
+    }
+
+    private func showNoTextAlert() {
+        let alert = NSAlert()
+        alert.messageText = "No Text Found"
+        alert.informativeText = "Couldn't find any text in the selected area. Try selecting a larger region or an area with clearer text."
+        alert.alertStyle = .informational
+        alert.addButton(withTitle: "OK")
+        alert.runModal()
     }
 }
