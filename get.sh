@@ -16,8 +16,49 @@ if [ -z "$APP_NAME" ]; then
     echo "  CleanDock  — Downloads folder cleaner"
     echo "  DropShelf  — Drag & drop parking shelf"
     echo "  WiFiMon    — Wi-Fi speed & ping monitor"
+    echo "  all        — Install everything"
     echo ""
     exit 1
+fi
+
+install_app() {
+    local name="$1"
+    local APP_PATH="/Applications/$name.app"
+    local ZIP_URL="https://github.com/lonkarabhishek/Snapdeck/releases/latest/download/$name.zip"
+    local TMP_DIR=$(mktemp -d)
+
+    echo ""
+    echo "==> Installing $name..."
+
+    echo "  Downloading..."
+    curl -sL "$ZIP_URL" -o "$TMP_DIR/$name.zip"
+
+    echo "  Extracting..."
+    unzip -q "$TMP_DIR/$name.zip" -d "$TMP_DIR"
+
+    echo "  Moving to /Applications..."
+    rm -rf "$APP_PATH"
+    mv "$TMP_DIR/$name.app" "$APP_PATH"
+
+    echo "  Removing macOS quarantine flag..."
+    xattr -cr "$APP_PATH"
+
+    rm -rf "$TMP_DIR"
+
+    echo "  $name installed!"
+    open "$APP_PATH"
+}
+
+# Install all apps
+if [ "$APP_NAME" = "all" ]; then
+    echo ""
+    echo "==> Installing all Barkit apps..."
+    for app in $APPS; do
+        install_app "$app"
+    done
+    echo ""
+    echo "==> All apps installed successfully!"
+    exit 0
 fi
 
 # Validate app name
@@ -31,36 +72,11 @@ done
 
 if [ "$VALID" = false ]; then
     echo "Unknown app: $APP_NAME"
-    echo "Available: $APPS"
+    echo "Available: $APPS all"
     exit 1
 fi
 
-APP_PATH="/Applications/$APP_NAME.app"
-ZIP_URL="https://github.com/lonkarabhishek/Snapdeck/releases/latest/download/$APP_NAME.zip"
-TMP_DIR=$(mktemp -d)
-
-echo ""
-echo "==> Installing $APP_NAME..."
-echo ""
-
-echo "  Downloading..."
-curl -sL "$ZIP_URL" -o "$TMP_DIR/$APP_NAME.zip"
-
-echo "  Extracting..."
-unzip -q "$TMP_DIR/$APP_NAME.zip" -d "$TMP_DIR"
-
-echo "  Moving to /Applications..."
-rm -rf "$APP_PATH"
-mv "$TMP_DIR/$APP_NAME.app" "$APP_PATH"
-
-echo "  Removing macOS quarantine flag..."
-xattr -cr "$APP_PATH"
-
-rm -rf "$TMP_DIR"
-
+install_app "$APP_NAME"
 echo ""
 echo "==> $APP_NAME installed successfully!"
-echo "  Opening $APP_NAME..."
 echo ""
-
-open "$APP_PATH"

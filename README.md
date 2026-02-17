@@ -46,6 +46,25 @@ Recent screenshots one click away in the menu bar. Floating thumbnail on capture
 curl -sL https://raw.githubusercontent.com/lonkarabhishek/Snapdeck/main/get.sh | bash -s Snapdeck
 ```
 
+## Install All
+```bash
+curl -sL https://raw.githubusercontent.com/lonkarabhishek/Snapdeck/main/get.sh | bash -s all
+```
+
+## Direct Downloads
+
+| App | Download |
+|-----|----------|
+| WiFiMon | [WiFiMon.zip](https://github.com/lonkarabhishek/Snapdeck/releases/latest/download/WiFiMon.zip) |
+| DropShelf | [DropShelf.zip](https://github.com/lonkarabhishek/Snapdeck/releases/latest/download/DropShelf.zip) |
+| CleanDock | [CleanDock.zip](https://github.com/lonkarabhishek/Snapdeck/releases/latest/download/CleanDock.zip) |
+| TextGrab | [TextGrab.zip](https://github.com/lonkarabhishek/Snapdeck/releases/latest/download/TextGrab.zip) |
+| QuickScrap | [QuickScrap.zip](https://github.com/lonkarabhishek/Snapdeck/releases/latest/download/QuickScrap.zip) |
+| KleepMe | [KleepMe.zip](https://github.com/lonkarabhishek/Snapdeck/releases/latest/download/KleepMe.zip) |
+| Snapdeck | [Snapdeck.zip](https://github.com/lonkarabhishek/Snapdeck/releases/latest/download/Snapdeck.zip) |
+
+> After downloading, unzip and move to `/Applications`. If macOS says the app is damaged, run: `xattr -cr /Applications/AppName.app`
+
 ## Build from Source
 
 Requires macOS 13+ and Xcode Command Line Tools.
