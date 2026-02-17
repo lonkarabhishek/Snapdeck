@@ -4,28 +4,10 @@ A collection of lightweight macOS menu bar tools. Built with Swift, no Xcode req
 
 ## The Tools
 
-### Snapdeck — Screenshot Manager
-Recent screenshots one click away in the menu bar. Floating thumbnail on capture, one-click copy, drag and drop.
+### DropShelf — Drag & Drop Shelf
+Dragging a file between apps on Mac feels like carrying a pizza through a revolving door. DropShelf is a menu bar shelf where you can park files, images, and text mid-drag — and grab them whenever.
 ```bash
-curl -sL https://raw.githubusercontent.com/lonkarabhishek/Snapdeck/main/get.sh | bash -s Snapdeck
-```
-
-### KleepMe — Clipboard History
-You copy a link, then copy some text, and the link is gone forever. KleepMe keeps your last 20 copied items — text, images, links. Pin favorites, search history.
-```bash
-curl -sL https://raw.githubusercontent.com/lonkarabhishek/Snapdeck/main/get.sh | bash -s KleepMe
-```
-
-### QuickScrap — Instant Scratchpad
-Need to jot down a phone number or tracking ID? Opening Notes feels heavy. QuickScrap is a scratchpad that's always one click away. No titles, no folders, no syncing.
-```bash
-curl -sL https://raw.githubusercontent.com/lonkarabhishek/Snapdeck/main/get.sh | bash -s QuickScrap
-```
-
-### TextGrab — Screen OCR
-You see text in an image, a video, a non-selectable part of a website. You can't copy it. TextGrab lets you draw a box around anything on screen and extracts the text instantly.
-```bash
-curl -sL https://raw.githubusercontent.com/lonkarabhishek/Snapdeck/main/get.sh | bash -s TextGrab
+curl -sL https://raw.githubusercontent.com/lonkarabhishek/Snapdeck/main/get.sh | bash -s DropShelf
 ```
 
 ### CleanDock — Downloads Cleaner
@@ -34,10 +16,28 @@ Your Downloads folder has 400 files from 2 years ago. CleanDock shows recent dow
 curl -sL https://raw.githubusercontent.com/lonkarabhishek/Snapdeck/main/get.sh | bash -s CleanDock
 ```
 
-### DropShelf — Drag & Drop Shelf
-Dragging a file between apps on Mac feels like carrying a pizza through a revolving door. DropShelf is a menu bar shelf where you can park files, images, and text mid-drag — and grab them whenever.
+### TextGrab — Screen OCR
+You see text in an image, a video, a non-selectable part of a website. You can't copy it. TextGrab lets you draw a box around anything on screen and extracts the text instantly.
 ```bash
-curl -sL https://raw.githubusercontent.com/lonkarabhishek/Snapdeck/main/get.sh | bash -s DropShelf
+curl -sL https://raw.githubusercontent.com/lonkarabhishek/Snapdeck/main/get.sh | bash -s TextGrab
+```
+
+### QuickScrap — Instant Scratchpad
+Need to jot down a phone number or tracking ID? Opening Notes feels heavy. QuickScrap is a scratchpad that's always one click away. No titles, no folders, no syncing.
+```bash
+curl -sL https://raw.githubusercontent.com/lonkarabhishek/Snapdeck/main/get.sh | bash -s QuickScrap
+```
+
+### KleepMe — Clipboard History
+You copy a link, then copy some text, and the link is gone forever. KleepMe keeps your last 20 copied items — text, images, links. Pin favorites, search history.
+```bash
+curl -sL https://raw.githubusercontent.com/lonkarabhishek/Snapdeck/main/get.sh | bash -s KleepMe
+```
+
+### Snapdeck — Screenshot Manager
+Recent screenshots one click away in the menu bar. Floating thumbnail on capture, one-click copy, drag and drop.
+```bash
+curl -sL https://raw.githubusercontent.com/lonkarabhishek/Snapdeck/main/get.sh | bash -s Snapdeck
 ```
 
 ## Build from Source
