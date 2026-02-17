@@ -11,6 +11,13 @@ struct MenuBarView: View {
                 Text("TextGrab")
                     .font(.system(size: 13, weight: .semibold))
                 Spacer()
+                Button(action: { store.loadFromDisk() }) {
+                    Image(systemName: "arrow.clockwise")
+                        .font(.system(size: 12))
+                        .foregroundColor(.secondary)
+                }
+                .buttonStyle(.borderless)
+                .help("Refresh")
                 Text("\(store.items.count)")
                     .font(.system(size: 11))
                     .foregroundColor(.secondary)

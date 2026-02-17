@@ -9,6 +9,13 @@ struct MenuBarView: View {
                 Text("Recent Screenshots")
                     .font(.system(size: 13, weight: .semibold))
                 Spacer()
+                Button(action: { store.refresh() }) {
+                    Image(systemName: "arrow.clockwise")
+                        .font(.system(size: 12))
+                        .foregroundColor(.secondary)
+                }
+                .buttonStyle(.borderless)
+                .help("Refresh")
                 Text("\(store.screenshots.count)")
                     .font(.system(size: 11))
                     .foregroundColor(.secondary)

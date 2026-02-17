@@ -10,6 +10,13 @@ struct MenuBarView: View {
                 Text("CleanDock")
                     .font(.system(size: 13, weight: .semibold))
                 Spacer()
+                Button(action: { store.refresh() }) {
+                    Image(systemName: "arrow.clockwise")
+                        .font(.system(size: 12))
+                        .foregroundColor(.secondary)
+                }
+                .buttonStyle(.borderless)
+                .help("Refresh")
                 Text("\(store.items.count) files")
                     .font(.system(size: 11))
                     .foregroundColor(.secondary)

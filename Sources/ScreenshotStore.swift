@@ -16,8 +16,15 @@ struct ScreenshotItem: Identifiable, Equatable {
 class ScreenshotStore: ObservableObject {
     @Published var screenshots: [ScreenshotItem] = []
     private let maxItems = 20
+    private var directory: URL?
+
+    func refresh() {
+        guard let dir = directory else { return }
+        loadExisting(from: dir)
+    }
 
     func loadExisting(from directory: URL) {
+        self.directory = directory
         let fm = FileManager.default
         guard let contents = try? fm.contentsOfDirectory(
             at: directory,

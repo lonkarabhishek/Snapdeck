@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-APPS="Snapdeck KleepMe QuickScrap TextGrab CleanDock DropShelf"
+APPS="Snapdeck KleepMe QuickScrap TextGrab CleanDock DropShelf WiFiMon"
 APP_NAME="$1"
 
 if [ -z "$APP_NAME" ]; then
@@ -15,6 +15,7 @@ if [ -z "$APP_NAME" ]; then
     echo "  TextGrab   — Screen OCR text extraction"
     echo "  CleanDock  — Downloads folder cleaner"
     echo "  DropShelf  — Drag & drop parking shelf"
+    echo "  WiFiMon    — Wi-Fi speed & ping monitor"
     echo ""
     exit 1
 fi

@@ -4,6 +4,12 @@ A collection of lightweight macOS menu bar tools. Built with Swift, no Xcode req
 
 ## The Tools
 
+### WiFiMon — Wi-Fi Monitor
+Your Mac shows Wi-Fi bars but not what matters — actual speed and ping. WiFiMon sits in your menu bar showing real-time ping, signal strength, IP address, and runs speed tests on demand.
+```bash
+curl -sL https://raw.githubusercontent.com/lonkarabhishek/Snapdeck/main/get.sh | bash -s WiFiMon
+```
+
 ### DropShelf — Drag & Drop Shelf
 Dragging a file between apps on Mac feels like carrying a pizza through a revolving door. DropShelf is a menu bar shelf where you can park files, images, and text mid-drag — and grab them whenever.
 ```bash
@@ -55,6 +61,7 @@ cd Snapdeck
 ./TextGrab/build.sh
 ./CleanDock/build.sh
 ./DropShelf/build.sh
+./WiFiMon/build.sh
 ```
 
 ## How It Works
@@ -62,7 +69,7 @@ cd Snapdeck
 - Pure Swift, compiled with `swiftc` — no Xcode project needed
 - Each app is a standalone menu bar agent (no dock icon)
 - ~400–600 lines of code per app
-- macOS 13+ using AppKit, SwiftUI, and native frameworks (Vision for OCR, DispatchSource for file watching)
+- macOS 13+ using AppKit, SwiftUI, and native frameworks (Vision for OCR, CoreWLAN for Wi-Fi, DispatchSource for file watching)
 
 ## License
 
