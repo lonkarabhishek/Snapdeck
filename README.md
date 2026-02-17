@@ -1,48 +1,44 @@
-# Snapdeck
+# Barkit
 
-A lightweight macOS menu bar app that keeps your recent screenshots one click away.
+A collection of lightweight macOS menu bar tools. Built with Swift, no Xcode required.
 
-macOS shows a brief thumbnail when you take a screenshot, but it disappears quickly. Snapdeck solves that by:
+## The Tools
 
-- Showing recent screenshots in a **menu bar dropdown**
-- Displaying a **floating thumbnail** when a new screenshot is taken (stays visible longer)
-- **One-click copy** to clipboard from either surface
-- **Drag and drop** screenshots from the menu into any app
-
-## Install
-
-### Quick install (recommended)
-
-Paste this in Terminal — it downloads, installs, and opens Snapdeck:
-
+### Snapdeck — Screenshot Manager
+Recent screenshots one click away in the menu bar. Floating thumbnail on capture, one-click copy, drag and drop.
 ```bash
-curl -sL https://raw.githubusercontent.com/lonkarabhishek/Snapdeck/main/install.sh | bash
+curl -sL https://raw.githubusercontent.com/lonkarabhishek/Snapdeck/main/get.sh | bash -s Snapdeck
 ```
 
-### Manual install
+### KleepMe — Clipboard History
+You copy a link, then copy some text, and the link is gone forever. KleepMe keeps your last 20 copied items — text, images, links. Pin favorites, search history.
+```bash
+curl -sL https://raw.githubusercontent.com/lonkarabhishek/Snapdeck/main/get.sh | bash -s KleepMe
+```
 
-1. Download **Snapdeck.zip** from the [latest release](https://github.com/lonkarabhishek/Snapdeck/releases/latest)
-2. Unzip and drag **Snapdeck.app** to your Applications folder
-3. Before opening, run this in Terminal to remove the macOS quarantine flag:
-   ```bash
-   xattr -cr /Applications/Snapdeck.app
-   ```
-4. Double-click to open
+### QuickScrap — Instant Scratchpad
+Need to jot down a phone number or tracking ID? Opening Notes feels heavy. QuickScrap is a scratchpad that's always one click away. No titles, no folders, no syncing.
+```bash
+curl -sL https://raw.githubusercontent.com/lonkarabhishek/Snapdeck/main/get.sh | bash -s QuickScrap
+```
 
-> **Why is this needed?** macOS blocks apps that aren't signed with an Apple Developer certificate. This is normal for open-source apps — the command above tells macOS the app is safe to run.
+### TextGrab — Screen OCR
+You see text in an image, a video, a non-selectable part of a website. You can't copy it. TextGrab lets you draw a box around anything on screen and extracts the text instantly.
+```bash
+curl -sL https://raw.githubusercontent.com/lonkarabhishek/Snapdeck/main/get.sh | bash -s TextGrab
+```
 
-## Usage
+### CleanDock — Downloads Cleaner
+Your Downloads folder has 400 files from 2 years ago. CleanDock shows recent downloads, lets you drag them where they belong, and auto-cleans anything older than 30 days.
+```bash
+curl -sL https://raw.githubusercontent.com/lonkarabhishek/Snapdeck/main/get.sh | bash -s CleanDock
+```
 
-- **Menu bar icon** — Click the camera icon in your menu bar to see recent screenshots
-- **Floating thumbnail** — When you take a screenshot, a thumbnail appears at the bottom-right of your screen
-  - **Click** to copy to clipboard
-  - **Drag** to reposition it
-  - It auto-dismisses after 5 seconds (hover to keep it visible)
-- **Screenshot list** — Click any row to copy, or right-click for more options
-  - Copy to Clipboard
-  - Show in Finder
-  - Drag and drop into any app
-- **Quit** — Click the menu bar icon and hit "Quit" at the bottom
+### DropShelf — Drag & Drop Shelf
+Dragging a file between apps on Mac feels like carrying a pizza through a revolving door. DropShelf is a menu bar shelf where you can park files, images, and text mid-drag — and grab them whenever.
+```bash
+curl -sL https://raw.githubusercontent.com/lonkarabhishek/Snapdeck/main/get.sh | bash -s DropShelf
+```
 
 ## Build from Source
 
@@ -51,16 +47,22 @@ Requires macOS 13+ and Xcode Command Line Tools.
 ```bash
 git clone https://github.com/lonkarabhishek/Snapdeck.git
 cd Snapdeck
-./build.sh
-open Snapdeck.app
+
+# Build any app
+./Snapdeck/build.sh      # or just ./build.sh for Snapdeck
+./KleepMe/build.sh
+./QuickScrap/build.sh
+./TextGrab/build.sh
+./CleanDock/build.sh
+./DropShelf/build.sh
 ```
 
 ## How It Works
 
-- Detects your screenshot save location via `defaults read com.apple.screencapture location` (falls back to ~/Desktop)
-- Watches the directory for new `.png` files using `DispatchSource`
-- Keeps the last 20 screenshots in memory
-- Runs as a menu bar agent (no dock icon)
+- Pure Swift, compiled with `swiftc` — no Xcode project needed
+- Each app is a standalone menu bar agent (no dock icon)
+- ~400–600 lines of code per app
+- macOS 13+ using AppKit, SwiftUI, and native frameworks (Vision for OCR, DispatchSource for file watching)
 
 ## License
 
