@@ -3,11 +3,19 @@ import UniformTypeIdentifiers
 
 struct ShelfRow: View {
     let item: ShelfItem
+    let isSelected: Bool
+    let onSelect: () -> Void
     let onCopy: () -> Void
     let onRemove: () -> Void
 
     var body: some View {
         HStack(spacing: 10) {
+            // Selection checkbox
+            Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
+                .font(.system(size: 14))
+                .foregroundColor(isSelected ? .accentColor : .secondary.opacity(0.4))
+                .onTapGesture { onSelect() }
+
             // Icon
             Image(nsImage: item.icon)
                 .resizable()
@@ -57,6 +65,11 @@ struct ShelfRow: View {
             .help("Remove from shelf")
         }
         .padding(.vertical, 4)
+        .padding(.horizontal, 2)
+        .background(
+            RoundedRectangle(cornerRadius: 4)
+                .fill(isSelected ? Color.accentColor.opacity(0.08) : Color.clear)
+        )
         .contentShape(Rectangle())
         .onDrag {
             switch item.type {
@@ -69,8 +82,18 @@ struct ShelfRow: View {
                     return NSItemProvider(object: text as NSString)
                 }
             case .image:
-                if let data = item.imageData, let image = NSImage(data: data) {
-                    return NSItemProvider(object: image)
+                if let data = item.imageData,
+                   let image = NSImage(data: data),
+                   let tiff = image.tiffRepresentation,
+                   let bitmap = NSBitmapImageRep(data: tiff),
+                   let pngData = bitmap.representation(using: .png, properties: [:]) {
+                    let tempDir = FileManager.default.temporaryDirectory
+                    let formatter = DateFormatter()
+                    formatter.dateFormat = "yyyy-MM-dd 'at' h.mm.ss a"
+                    let fileName = "Image \(formatter.string(from: item.date)).png"
+                    let tempFile = tempDir.appendingPathComponent(fileName)
+                    try? pngData.write(to: tempFile)
+                    return NSItemProvider(object: tempFile as NSURL)
                 }
             }
             return NSItemProvider()

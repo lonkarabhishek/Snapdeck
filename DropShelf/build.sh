@@ -24,6 +24,7 @@ swiftc \
     "$SOURCES_DIR/ShelfItem.swift" \
     "$SOURCES_DIR/ShelfStore.swift" \
     "$SOURCES_DIR/ShelfRow.swift" \
+    "$SOURCES_DIR/DropHostingView.swift" \
     "$SOURCES_DIR/MenuBarView.swift" \
     "$SOURCES_DIR/AppDelegate.swift" \
     "$SOURCES_DIR/main.swift"

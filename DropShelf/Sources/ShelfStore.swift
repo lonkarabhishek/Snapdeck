@@ -3,6 +3,55 @@ import UniformTypeIdentifiers
 
 class ShelfStore: ObservableObject {
     @Published var items: [ShelfItem] = []
+    @Published var selectedIds: Set<UUID> = []
+
+    var selectedItems: [ShelfItem] {
+        items.filter { selectedIds.contains($0.id) }
+    }
+
+    var hasSelection: Bool {
+        !selectedIds.isEmpty
+    }
+
+    func toggleSelection(_ item: ShelfItem) {
+        if selectedIds.contains(item.id) {
+            selectedIds.remove(item.id)
+        } else {
+            selectedIds.insert(item.id)
+        }
+    }
+
+    func selectAll() {
+        selectedIds = Set(items.map { $0.id })
+    }
+
+    func clearSelection() {
+        selectedIds.removeAll()
+    }
+
+    func removeSelected() {
+        items.removeAll { selectedIds.contains($0.id) }
+        selectedIds.removeAll()
+    }
+
+    func copySelectedToClipboard() {
+        let selected = selectedItems
+        guard !selected.isEmpty else { return }
+        let pb = NSPasteboard.general
+        pb.clearContents()
+        var objects: [NSPasteboardWriting] = []
+        for item in selected {
+            switch item.type {
+            case .file:
+                if let url = item.fileURL { objects.append(url as NSURL) }
+            case .text:
+                if let text = item.text { objects.append(text as NSString) }
+            case .image:
+                if let data = item.imageData, let image = NSImage(data: data) { objects.append(image) }
+            }
+        }
+        pb.writeObjects(objects)
+    }
 
     func addFile(url: URL) {
         DispatchQueue.main.async {
@@ -53,43 +102,35 @@ class ShelfStore: ObservableObject {
         }
     }
 
-    func handleDrop(providers: [NSItemProvider]) -> Bool {
-        var handled = false
-
-        for provider in providers {
-            // Files / URLs
-            if provider.hasItemConformingToTypeIdentifier(UTType.fileURL.identifier) {
-                provider.loadItem(forTypeIdentifier: UTType.fileURL.identifier, options: nil) { [weak self] data, _ in
-                    if let data = data as? Data, let url = URL(dataRepresentation: data, relativeTo: nil) {
-                        self?.addFile(url: url)
-                    }
-                }
-                handled = true
+    func handlePasteboardDrop(_ pasteboard: NSPasteboard) -> Bool {
+        // Try file URLs first — works for ALL file types (png, pdf, zip, anything)
+        if let urls = pasteboard.readObjects(forClasses: [NSURL.self], options: [
+            .urlReadingFileURLsOnly: true
+        ]) as? [URL], !urls.isEmpty {
+            for url in urls {
+                addFile(url: url)
             }
-            // Images
-            else if provider.hasItemConformingToTypeIdentifier(UTType.image.identifier) {
-                provider.loadItem(forTypeIdentifier: UTType.image.identifier, options: nil) { [weak self] data, _ in
-                    if let data = data as? Data {
-                        self?.addImage(data: data)
-                    } else if let url = data as? URL, let imageData = try? Data(contentsOf: url) {
-                        self?.addImage(data: imageData)
-                    }
-                }
-                handled = true
-            }
-            // Plain text
-            else if provider.hasItemConformingToTypeIdentifier(UTType.plainText.identifier) {
-                provider.loadItem(forTypeIdentifier: UTType.plainText.identifier, options: nil) { [weak self] data, _ in
-                    if let data = data as? Data, let text = String(data: data, encoding: .utf8) {
-                        self?.addText(text)
-                    } else if let text = data as? String {
-                        self?.addText(text)
-                    }
-                }
-                handled = true
-            }
+            return true
         }
 
-        return handled
+        // Try images (from browser drag, copy-paste, etc.)
+        if let images = pasteboard.readObjects(forClasses: [NSImage.self], options: nil) as? [NSImage], !images.isEmpty {
+            for image in images {
+                if let tiff = image.tiffRepresentation {
+                    addImage(data: tiff)
+                }
+            }
+            return true
+        }
+
+        // Try strings
+        if let strings = pasteboard.readObjects(forClasses: [NSString.self], options: nil) as? [String], !strings.isEmpty {
+            for text in strings {
+                addText(text)
+            }
+            return true
+        }
+
+        return false
     }
 }
