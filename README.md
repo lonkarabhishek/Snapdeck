@@ -1,4 +1,4 @@
-# Barkit
+# Snapdeck
 
 A collection of lightweight macOS menu bar tools. Built with Swift, no Xcode required.
 
